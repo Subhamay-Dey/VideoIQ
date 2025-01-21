@@ -5,6 +5,7 @@ CREATE TABLE "users" (
     "email" VARCHAR(191) NOT NULL,
     "image" TEXT,
     "oauth_id" TEXT NOT NULL,
+    "provider" VARCHAR(191) NOT NULL,
     "coins" INTEGER NOT NULL DEFAULT 50,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
