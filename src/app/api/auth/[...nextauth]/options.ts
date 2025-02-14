@@ -7,6 +7,7 @@ export interface CustomSession {
   user?: CustomUser;
   expires: ISODateString;
 }
+
 export interface CustomUser {
   id?: string | null;
   name?: string | null;
@@ -14,6 +15,7 @@ export interface CustomUser {
   image?: string | null;
   provider?: string | null;
 }
+
 export const authOptions: AuthOptions = {
   pages: {
     signIn: "/",
