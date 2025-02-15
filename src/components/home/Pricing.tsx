@@ -41,6 +41,14 @@ const tiers = [
 function PricingPage() {
     return (
         <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
+            <div className="container mx-auto">
+        <h2 className="text-3xl font-bold text-center ">
+          Simple, Transparent Pricing
+        </h2>
+        <p className="text-2xl text-indigo-500 font-bold text-center mb-12">
+          1 coin = 1 ₹
+        </p>
+        </div>
             <PricingCards 
             tiers={tiers}
             className="gap-6"
