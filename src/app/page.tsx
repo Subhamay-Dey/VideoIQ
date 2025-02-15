@@ -1,8 +1,14 @@
+
+import { Footerdemo } from '@/components/home/Footer'
 import React from 'react'
 
 function Page() {
   return (
-    <div>Page</div>
+    <>
+      <div className='block'>
+        <Footerdemo/>
+      </div>
+    </>
   )
 }
 
