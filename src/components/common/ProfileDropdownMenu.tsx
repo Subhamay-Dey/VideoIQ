@@ -8,12 +8,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import React from "react";
+import React, { Suspense, useState } from "react";
 import UserAvatar from "./UserAvatar";
+import dynamic from "next/dynamic";
+const Logout = dynamic(() => import("../auth/Logout"))
 
 function ProfileDropdownMenu({user}:{user:CustomUser}) {
 
+  const [open, setOpen] = useState(false)
+
   return (
+    <>
+    {open && <Suspense>
+        <Logout open={open} setOpen={setOpen}/>
+      </Suspense>}
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar image={user?.image ?? undefined} name={user?.name!}/>
@@ -23,9 +31,10 @@ function ProfileDropdownMenu({user}:{user:CustomUser}) {
         <DropdownMenuSeparator />
         <DropdownMenuItem>Transactions</DropdownMenuItem>
         <DropdownMenuItem>Coins Spend</DropdownMenuItem>
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setOpen(true)}>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+    </>
   );
 }
 
