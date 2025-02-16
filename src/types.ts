@@ -1,0 +1,3 @@
+type CoinsType = {
+    coins: number,
+}

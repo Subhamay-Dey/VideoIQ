@@ -13,7 +13,7 @@ async function Page() {
 
   return (
     <>
-    <p>{JSON.stringify(session)}</p>
+    {/* <p>{JSON.stringify(session)}</p> */}
       <Navbar user={session?.user}/>
       <Hero/>
       <div className='block'>
