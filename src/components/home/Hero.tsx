@@ -33,8 +33,8 @@ export function Hero() {
           href: "/docs",
         },
       }}
-      title="Build faster with beautiful components"
-      description="Premium UI components built with React and Tailwind CSS. Save time and ship your next project faster with our ready-to-use components."
+      title="Instantly Summarize Any Podcast with AI"
+      description="Leverage AI for concise summaries and key insights, including top questions, from your favorite podcasts instantly."
       actions={[
         {
           text: "Get Started",
