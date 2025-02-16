@@ -10,6 +10,7 @@ export default {
   theme: {
   	extend: {
   		colors: {
+			brand: "hsl(var(--brand))","brand-foreground": "hsl(var(--brand-foreground))",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -56,19 +57,33 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-		maxWidth: {
-			container: "1280px",
+  		maxWidth: {
+  			container: '1280px'
 		},
 		animation: {
 			marquee: 'marquee var(--duration) linear infinite',
-		  },
-		  keyframes: {
+			appear: "appear 0.5s ease-out forwards",
+			"appear-zoom": "appear-zoom 0.5s ease-out forwards"
+		},
+		keyframes: {
 			marquee: {
-			  from: { transform: 'translateX(0)' },
-			  to: { transform: 'translateX(calc(-100% - var(--gap)))' }
+				from: {
+					transform: 'translateX(0)'
+				},
+				to: {
+					transform: 'translateX(calc(-100% - var(--gap)))'
+				}
+			},
+			appear: {
+				"0%": { opacity: "0", transform: "translateY(10px)" },
+				"100%": { opacity: "1", transform: "translateY(0)" }
+				},
+				"appear-zoom": {
+				"0%": { opacity: "0", transform: "scale(0.95)" },
+				"100%": { opacity: "1", transform: "scale(1)" }
 			}
-		  }
-  	}
+		}
+	}
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
