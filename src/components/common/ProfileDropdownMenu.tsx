@@ -19,9 +19,11 @@ function ProfileDropdownMenu({user}:{user:CustomUser}) {
 
   return (
     <>
-    {open && <Suspense>
+    {open && 
+      <Suspense fallback={<p>Loading...</p>}>
         <Logout open={open} setOpen={setOpen}/>
-      </Suspense>}
+      </Suspense>
+    }
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar image={user?.image ?? undefined} name={user?.name!}/>

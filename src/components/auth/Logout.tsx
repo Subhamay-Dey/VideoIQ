@@ -11,8 +11,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { signOut } from "next-auth/react";
 
 function Logout({open, setOpen}:{open:boolean, setOpen: Dispatch<SetStateAction<boolean>>}) {
+
+  const handleLogout = () => {
+    signOut({
+      callbackUrl: "/",
+      redirect: true,
+    })
+  }
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
@@ -25,7 +34,7 @@ function Logout({open, setOpen}:{open:boolean, setOpen: Dispatch<SetStateAction<
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleLogout}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

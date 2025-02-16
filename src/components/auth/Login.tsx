@@ -32,7 +32,7 @@ export default function LoginModal() {
         </DialogHeader>
         <div className="text-center">
           <h1 className="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
-            PodBite
+            VideoIQ
           </h1>
         </div>
         <Button variant="outline" onClick={handleGoogleLogin}>
