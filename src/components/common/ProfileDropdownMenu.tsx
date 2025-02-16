@@ -12,6 +12,7 @@ import React from "react";
 import UserAvatar from "./UserAvatar";
 
 function ProfileDropdownMenu({user}:{user:CustomUser}) {
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
