@@ -2,14 +2,16 @@ import DashNav from '@/components/dashboard/DashNav'
 import { getServerSession } from 'next-auth'
 import React from 'react'
 import { authOptions, CustomSession } from '../api/auth/[...nextauth]/options'
+import getUserCoin from '@/actions/fetchActions'
 
 async function page() {
 
     const session:CustomSession | null = await getServerSession(authOptions)
+    const coins = await getUserCoin.getUserCoin(session?.user?.id!)
 
   return (
     <div className='container'>
-        <DashNav user={session?.user!} userCoins={null}/>
+        <DashNav user={session?.user!} userCoins={coins}/>
     </div>
   )
 }
