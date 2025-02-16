@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-// import ProfileDropdown from "../common/ProfileDropdown";
 import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
 import Image from "next/image";
 import Link from "next/link";
+import ProfileDropdownMenu from "../common/ProfileDropdownMenu";
 
 async function DashNav({
   user,
@@ -25,7 +25,7 @@ async function DashNav({
           <span className="text-xl font-bold">{userCoins?.coins ?? 0}</span>
           <Image src="/images/coin.png" width={30} height={30} alt="coin" />
         </div>
-        {/* <ProfileDropdown user={user} /> */}
+        <ProfileDropdownMenu user={user} />
       </div>
     </nav>
   );
