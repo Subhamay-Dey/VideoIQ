@@ -24,18 +24,20 @@ model User {
   createdAt    DateTime       @default(now())
   Summary      Summary[]
   Transactions Transactions[]
+  CoinSpend    CoinSpend[]
 
   @@map("users")
 }
 
 model Summary {
-  id        String   @id @default(uuid()) @db.Uuid
+  id        String      @id @default(uuid()) @db.Uuid
   user_id   Int
-  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
   title     String
   url       String
   response  String?
-  createdAt DateTime @default(now())
+  createdAt DateTime    @default(now())
+  CoinSpend CoinSpend[]
 
   @@map("summary")
 }
@@ -49,4 +51,15 @@ model Transactions {
   createdAt DateTime @default(now())
 
   @@map("transactions")
+}
+
+model CoinSpend {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  summary    Summary  @relation(fields: [summary_id], references: [id], onDelete: Cascade)
+  summary_id String   @db.Uuid
+  createdAt  DateTime @default(now())
+
+  @@map("coin_spend")
 }
