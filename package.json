@@ -12,6 +12,7 @@
     "@distube/youtube": "^1.0.4",
     "@langchain/community": "^0.3.31",
     "@langchain/core": "^0.3.40",
+    "@langchain/openai": "^0.4.4",
     "@prisma/client": "^6.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-avatar": "^1.1.3",
