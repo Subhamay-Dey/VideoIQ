@@ -4,11 +4,13 @@ import React, { useState, useRef, FormEvent, ChangeEvent } from "react";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
 import VanishAnimation from "./VanishAnimation";
+import Loading from "../common/Loading";
 
 function URLInput() {
   const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
   const [triggerVanish, setTriggerVanish] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -47,7 +49,13 @@ function URLInput() {
             animating ? "text-transparent" : "text-black"
           }`}
           placeholder="Enter Video URL"
+          disabled={loading}
         />
+        {loading && (
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                <Loading/>
+            </div>
+        )}
 
         {animating && inputRef.current && (
           <VanishAnimation

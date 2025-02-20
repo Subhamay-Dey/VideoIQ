@@ -3,7 +3,7 @@
 import React from "react";
 import {SessionProvider as NextAuthSessionProvider} from "next-auth/react"
 
-type Props = {
+interface Props {
     children?: React.ReactNode
 }
 
