@@ -1,3 +1,4 @@
+import getUserCoin from "@/actions/fetchActions";
 import AddUrlSchema from "@/validations/AddUrlValidation";
 import vine, {errors} from "@vinejs/vine";
 import { getToken } from "next-auth/jwt";
@@ -21,6 +22,14 @@ class AddUrl {
             const body:AddUrlBody = await req.json();
             const validator = vine.compile(AddUrlSchema);
             const payload = await validator.validate(body)
+
+            const userCoins = await getUserCoin.getUserCoin(payload.userid);
+            const currentCoins = userCoins?.coins ?? 0;
+            if(userCoins === null || (userCoins?.coins < 10 )) {
+                const coinsneeded = 10 - currentCoins;
+                return NextResponse.json({ message: `You need ${coinsneeded} more coins to summarize. Please add more coins.` },{status: 400 });
+            }
+
             return NextResponse.json({ message: "Url added successfully", data: payload }, { status: 200 });
 
         } catch (error) {
