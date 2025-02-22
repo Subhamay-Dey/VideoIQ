@@ -5,6 +5,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import {Document} from "@langchain/core/documents"
+import prisma from "@/lib/db.config";
 
 interface AddUrlBody {
     url: string;
@@ -45,7 +46,15 @@ class AddUrl {
                 return NextResponse.json({ message: "Invalid URL" },{status: 404 });
             }
 
-            return NextResponse.json({ message: "Url added successfully", data: payload }, { status: 200 });
+            const summary = await prisma.summary.create({
+                data: {
+                    ...payload,
+                    user_id: Number(payload.userid),
+                    title: text[0].metadata?.title ?? "No title",
+                }
+            })
+
+            return NextResponse.json({ message: "Url added successfully", data: summary }, { status: 200 });
 
         } catch (error) {
             if (error instanceof errors.E_VALIDATION_ERROR) {
