@@ -3,6 +3,8 @@ import AddUrlSchema from "@/validations/AddUrlValidation";
 import vine, {errors} from "@vinejs/vine";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
+import {Document} from "@langchain/core/documents"
 
 interface AddUrlBody {
     url: string;
@@ -25,9 +27,22 @@ class AddUrl {
 
             const userCoins = await getUserCoin.getUserCoin(payload.userid);
             const currentCoins = userCoins?.coins ?? 0;
+
             if(userCoins === null || (userCoins?.coins < 10 )) {
                 const coinsneeded = 10 - currentCoins;
                 return NextResponse.json({ message: `You need ${coinsneeded} more coins to summarize. Please add more coins.` },{status: 400 });
+            }
+
+            let text : Document<Record<string, any>>[]
+            try {
+                const loader = YoutubeLoader.createFromUrl(payload.url, {
+                    language: "en",
+                    addVideoInfo: true,
+                  });
+                  
+                  text = await loader.load();
+            } catch (error) {
+                return NextResponse.json({ message: "Invalid URL" },{status: 404 });
             }
 
             return NextResponse.json({ message: "Url added successfully", data: payload }, { status: 200 });
