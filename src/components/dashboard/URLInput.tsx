@@ -88,6 +88,7 @@ function URLInput({user}:{user: CustomUser}) {
                 <Loading/>
             </div>
         )}
+        <span className="text-red-500">{error?.url}</span>
 
         {animating && inputRef.current && (
           <VanishAnimation
