@@ -36,6 +36,11 @@ function URLInput({user}:{user: CustomUser}) {
       setLoading(true);
       console.log(value);
       
+      const {data} = await axios.post("/api/add-video-url", 
+        {
+          url: value, 
+          userid: user.id
+        })
 
     } catch (error) {
       setLoading(false);
