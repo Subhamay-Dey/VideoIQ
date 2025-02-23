@@ -1,16 +1,19 @@
 "use client";
 
 import React, { useState, useRef, FormEvent, ChangeEvent } from "react";
+import { AxiosError } from "axios";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
 import VanishAnimation from "./VanishAnimation";
 import Loading from "../common/Loading";
+import { toast } from "sonner";
 
 function URLInput() {
   const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
   const [triggerVanish, setTriggerVanish] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({})
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -26,9 +29,21 @@ function URLInput() {
     setTriggerVanish(false);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(value);
+  const handleSubmit = (e: FormEvent) => {
+    try {
+      e.preventDefault();1
+      setLoading(true);
+      console.log(value);
+    } catch (error) {
+      setLoading(false);
+      if(error instanceof AxiosError) {
+        if(error.response?.status === 422) {
+          setError(error?.response?.data?.error)
+        } else {
+          toast.error(error?.response?.data?.message);
+        }
+      } 
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
