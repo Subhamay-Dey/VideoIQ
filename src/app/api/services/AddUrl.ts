@@ -4,12 +4,12 @@ import vine, {errors} from "@vinejs/vine";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
-import {Document} from "@langchain/core/documents"
+import {Document} from "@langchain/core/documents";
 import prisma from "@/lib/db.config";
 
 interface AddUrlBody {
     url: string;
-    userid: string;
+    user_id: string;
 }
 
 class AddUrl {
@@ -24,9 +24,19 @@ class AddUrl {
 
             const body:AddUrlBody = await req.json();
             const validator = vine.compile(AddUrlSchema);
-            const payload = await validator.validate(body)
+            const payload = await validator.validate(body);
 
-            const userCoins = await getUserCoin.getUserCoin(payload.userid);
+            // const existingurl = await prisma.summary.findFirst({
+            //     where: {
+            //         url: payload.url,
+            //     },
+            // })
+
+            // if(existingurl) {
+            //     return NextResponse.json({ message: "Video url already added, go and check this video summarization in your dashoard" },{status: 400 });
+            // }
+
+            const userCoins = await getUserCoin.getUserCoin(payload.user_id);
             const currentCoins = userCoins?.coins ?? 0;
 
             if(userCoins === null || (userCoins?.coins < 10 )) {
@@ -49,7 +59,7 @@ class AddUrl {
             const summary = await prisma.summary.create({
                 data: {
                     ...payload,
-                    user_id: Number(payload.userid),
+                    user_id: Number(payload.user_id),
                     title: text[0].metadata?.title ?? "No title",
                 }
             })

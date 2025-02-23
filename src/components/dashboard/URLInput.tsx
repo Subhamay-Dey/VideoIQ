@@ -42,7 +42,7 @@ function URLInput({user}:{user: CustomUser}) {
       const {data} = await axios.post("/api/add-video-url", 
         {
           url: value, 
-          userid: user.id
+          user_id: user.id
         })
 
         const summary:SummaryType = data?.data
