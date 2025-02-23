@@ -13,7 +13,7 @@ function URLInput() {
   const [animating, setAnimating] = useState(false);
   const [triggerVanish, setTriggerVanish] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({})
+  const [error, setError] = useState<AddUrlErrorType>({})
 
   const inputRef = useRef<HTMLInputElement>(null);
 
