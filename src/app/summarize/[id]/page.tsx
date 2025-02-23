@@ -2,13 +2,13 @@ import GetSummary from '@/actions/SummaryAction'
 import { notFound } from 'next/navigation'
 import React from 'react'
 
-async function Summarize({searchparams}: {searchparams: {[key: string]: string | undefined}}) {
+async function Summarize({params}: {params: {id: string}}) {
 
-    if(!searchparams?.["id"]) {
+    if(!params) {
         return notFound()
     }
 
-    const summary:SummaryType | null = await GetSummary.getSummary(searchparams?.["id"])
+    const summary:SummaryType | null = await GetSummary.getSummary(params.id)
 
     if(!summary) {
         return notFound()
@@ -16,7 +16,7 @@ async function Summarize({searchparams}: {searchparams: {[key: string]: string |
 
   return (
     <div>Summarize
-        <p>{searchparams?.["id"]}</p>
+        <p>{params.id}</p>
     </div>
   )
 }

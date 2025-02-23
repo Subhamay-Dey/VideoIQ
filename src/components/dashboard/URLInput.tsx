@@ -35,7 +35,7 @@ function URLInput({user}:{user: CustomUser}) {
 
   const handleSubmit = async(e: FormEvent) => {
     try {
-      e.preventDefault();1
+      e.preventDefault();
       setLoading(true);
       console.log(value);
       
@@ -48,7 +48,7 @@ function URLInput({user}:{user: CustomUser}) {
         const summary:SummaryType = data?.data
         if(summary) {
           toast.success("Url is correct, redirecting you to summarize page.")
-          router.push(`/summarize/?id=${summary.id}`)
+          router.push(`/summarize/${summary.id}`)
         }
 
     } catch (error) {
