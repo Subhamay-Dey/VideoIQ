@@ -15,7 +15,9 @@ async function Summarize({searchparams}: {searchparams: {[key: string]: string |
     }
 
   return (
-    <div>Summarize</div>
+    <div>Summarize
+        <p>{searchparams?.["id"]}</p>
+    </div>
   )
 }
 
