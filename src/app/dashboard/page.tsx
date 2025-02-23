@@ -14,7 +14,7 @@ async function page() {
   return (
     <div className='container'>
         <DashNav user={session?.user!} userCoins={coins}/>
-        <URLInput/>
+        <URLInput user={session?.user!}/>
     </div>
   )
 }

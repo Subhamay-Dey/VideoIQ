@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useState, useRef, FormEvent, ChangeEvent } from "react";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
 import VanishAnimation from "./VanishAnimation";
 import Loading from "../common/Loading";
 import { toast } from "sonner";
+import { authOptions, CustomUser } from "@/app/api/auth/[...nextauth]/options";
 
-function URLInput() {
+function URLInput({user}:{user: CustomUser}) {
   const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
   const [triggerVanish, setTriggerVanish] = useState(false);
@@ -29,11 +30,13 @@ function URLInput() {
     setTriggerVanish(false);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async(e: FormEvent) => {
     try {
       e.preventDefault();1
       setLoading(true);
       console.log(value);
+      
+
     } catch (error) {
       setLoading(false);
       if(error instanceof AxiosError) {
