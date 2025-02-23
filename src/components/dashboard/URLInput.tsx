@@ -8,6 +8,7 @@ import VanishAnimation from "./VanishAnimation";
 import Loading from "../common/Loading";
 import { toast } from "sonner";
 import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
+import { useRouter } from "next/navigation";
 
 function URLInput({user}:{user: CustomUser}) {
   const [value, setValue] = useState("");
@@ -15,6 +16,8 @@ function URLInput({user}:{user: CustomUser}) {
   const [triggerVanish, setTriggerVanish] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AddUrlErrorType>({})
+
+  const router = useRouter()
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -41,6 +44,12 @@ function URLInput({user}:{user: CustomUser}) {
           url: value, 
           userid: user.id
         })
+
+        const summary:SummaryType = data?.data
+        if(summary) {
+          toast.success("Url is correct, redirecting you to summarize page.")
+          router.push(`/summarize/?id=${summary.id}`)
+        }
 
     } catch (error) {
       setLoading(false);
