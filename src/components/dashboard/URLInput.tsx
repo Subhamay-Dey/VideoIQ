@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import VanishAnimation from "./VanishAnimation";
 import Loading from "../common/Loading";
 import { toast } from "sonner";
-import { authOptions, CustomUser } from "@/app/api/auth/[...nextauth]/options";
+import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
 
 function URLInput({user}:{user: CustomUser}) {
   const [value, setValue] = useState("");
