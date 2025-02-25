@@ -6,6 +6,7 @@ const db = postgres(process.env.DATABASE_URL!, {
         console.log("Drizzle Query:", query, parameters);
     },
 });
+
 const drizzle = Drizzle(db);
 
 export async function safeQuery<T>(query: Promise<T>): Promise<T | null> {

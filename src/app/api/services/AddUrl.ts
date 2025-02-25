@@ -6,6 +6,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import {Document} from "@langchain/core/documents";
 import prisma from "@/lib/db.config";
+import { drizzle } from "../../../../drizzle/db";
+import { summary } from "../../../../drizzle/schema";
 
 interface AddUrlBody {
     url: string;
@@ -56,15 +58,22 @@ class AddUrl {
                 return NextResponse.json({ message: "Invalid URL" },{status: 404 });
             }
 
-            const summary = await prisma.summary.create({
-                data: {
-                    ...payload,
-                    user_id: Number(payload.user_id),
-                    title: text[0].metadata?.title ?? "No title",
-                }
-            })
+            // const summary = await prisma.summary.create({
+            //     data: {
+            //         ...payload,
+            //         user_id: Number(payload.user_id),
+            //         title: text[0].metadata?.title ?? "No title",
+            //     }
+            // })
 
-            return NextResponse.json({ message: "Url added successfully", data: summary }, { status: 200 });
+            const summar = await drizzle.insert(summary).values({
+                url:payload.url, 
+                user_id: Number(payload.user_id),
+                title:text[0].metadata?.title ?? "No title",
+            }
+            )
+
+            return NextResponse.json({ message: "Url added successfully", data: summar }, { status: 200 });
 
         } catch (error) {
             if (error instanceof errors.E_VALIDATION_ERROR) {

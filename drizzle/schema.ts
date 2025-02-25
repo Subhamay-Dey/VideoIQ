@@ -1,7 +1,6 @@
 import { pgTable, serial, text, varchar, uuid, integer, smallint, timestamp, foreignKey } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
-// Users Table
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 191 }).notNull(),
@@ -13,42 +12,38 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
-// Summary Table
 export const summary = pgTable("summary", {
   id: uuid("id").primaryKey().defaultRandom(),
   user_id: integer("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }), // ✅ Cascade delete at DB level
+    .references(() => users.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   url: text("url").notNull(),
   response: text("response"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
-// Transactions Table
 export const transactions = pgTable("transactions", {
   id: uuid("id").primaryKey().defaultRandom(),
   user_id: integer("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }), // ✅ Cascade delete at DB level
+    .references(() => users.id, { onDelete: "cascade" }),
   amount: integer("amount").notNull(),
   status: smallint("status").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
-// Coin Spend Table
 export const coinSpend = pgTable("coin_spend", {
   id: serial("id").primaryKey(),
   user_id: integer("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }), // ✅ Cascade delete at DB level
+    .references(() => users.id, { onDelete: "cascade" }),
   summary_id: uuid("summary_id")
     .notNull()
-    .references(() => summary.id, { onDelete: "cascade" }), // ✅ Cascade delete at DB level
+    .references(() => summary.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
-// Relationships (without `onDelete`)
 export const usersRelations = relations(users, ({ many }) => ({
   summaries: many(summary),
   transactions: many(transactions),
