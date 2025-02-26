@@ -28,6 +28,9 @@ class AddUrl {
             const validator = vine.compile(AddUrlSchema);
             const payload = await validator.validate(body);
 
+            console.log("Payload Data:", payload);
+
+
             // const existingurl = await prisma.summary.findFirst({
             //     where: {
             //         url: payload.url,
@@ -58,22 +61,21 @@ class AddUrl {
                 return NextResponse.json({ message: "Invalid URL" },{status: 404 });
             }
 
-            // const summary = await prisma.summary.create({
-            //     data: {
-            //         ...payload,
-            //         user_id: Number(payload.user_id),
-            //         title: text[0].metadata?.title ?? "No title",
-            //     }
-            // })
+            const summary = await prisma.summary.create({
+                data: {
+                    ...payload,
+                    user_id: Number(payload.user_id),
+                    title: text[0].metadata?.title ?? "No title",
+                }
+            })
 
-            const summar = await drizzle.insert(summary).values({
-                url:payload.url, 
-                user_id: Number(payload.user_id),
-                title:text[0].metadata?.title ?? "No title",
-            }
-            )
+            // const summar = await drizzle.insert(summary).values({
+            //     url:payload.url, 
+            //     user_id: Number(payload.user_id),
+            //     title:text[0].metadata?.title ?? "No title",
+            // }).returning();
 
-            return NextResponse.json({ message: "Url added successfully", data: summar }, { status: 200 });
+            return NextResponse.json({ message: "Url added successfully", data: summary }, { status: 200 });
 
         } catch (error) {
             if (error instanceof errors.E_VALIDATION_ERROR) {

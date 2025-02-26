@@ -4,7 +4,7 @@ import React from 'react'
 
 async function Summarize({params}: {params: {id: string}}) {
 
-    if(!params) {
+    if(!params?.id) {
         return notFound()
     }
 
