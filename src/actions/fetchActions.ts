@@ -1,4 +1,4 @@
-import prisma from "@/lib/db.config";
+import prisma from "../../prisma/db.config";
 import {unstable_cache} from "next/cache"
 import { drizzle } from "../../drizzle/db";
 import { users } from "../../drizzle/schema";

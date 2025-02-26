@@ -1,4 +1,4 @@
-import prisma from "@/lib/db.config";
+import prisma from "../../../../../prisma/db.config";
 import { AuthOptions, ISODateString, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
