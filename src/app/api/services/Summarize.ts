@@ -25,9 +25,7 @@ class Summarize {
                 const coinsneeded = 10 - currentCoins;
                 return NextResponse.json({message: `You need ${coinsneeded} more coins to summarize. Please add more coins.`}, {status: 400});
             }
-
             
-
         } catch (error) {
             
         }

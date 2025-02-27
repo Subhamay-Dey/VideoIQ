@@ -1,4 +1,4 @@
-import { pgTable, serial, text, varchar, uuid, integer, smallint, timestamp, foreignKey } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, varchar, uuid, integer, smallint, timestamp, foreignKey, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 export const users = pgTable("users", {
@@ -21,7 +21,11 @@ export const summary = pgTable("summary", {
   url: text("url").notNull(),
   response: text("response"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-});
+},
+(table) => ({
+  urlCreatedAtIdx: index("summary_url_createdAt_idx").on(table.url, table.createdAt),
+})
+);
 
 export const transactions = pgTable("transactions", {
   id: uuid("id").primaryKey().defaultRandom(),
