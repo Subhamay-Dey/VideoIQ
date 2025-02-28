@@ -30,17 +30,6 @@ class AddUrl {
 
             console.log("Payload Data:", payload);
 
-
-            // const existingurl = await prisma.summary.findFirst({
-            //     where: {
-            //         url: payload.url,
-            //     },
-            // })
-
-            // if(existingurl) {
-            //     return NextResponse.json({ message: "Video url already added, go and check this video summarization in your dashoard" },{status: 400 });
-            // }
-
             const userCoins = await getUserCoin.getUserCoin(payload.user_id);
             const currentCoins = userCoins?.coins ?? 0;
 

@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions, CustomSession } from "../auth/[...nextauth]/options";
 import getUserCoin from "@/actions/fetchActions";
+import prisma from "../../../../prisma/db.config";
 
 interface SummarizePayloadType {
     url: string,
