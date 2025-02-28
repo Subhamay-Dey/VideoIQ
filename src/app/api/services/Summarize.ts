@@ -5,6 +5,9 @@ import getUserCoin from "@/actions/fetchActions";
 import prisma from "../../../../prisma/db.config";
 import CoinsMinus from "@/actions/CoinsMinus";
 import CoinsSpend from "@/actions/CoinsSpend";
+import { Document } from "@langchain/core/documents";
+import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
+import {TokenTextSplitter} from "@langchain/textsplitters"
 
 interface SummarizePayloadType {
     url: string,
@@ -41,6 +44,26 @@ class Summarize {
 
                 return NextResponse.json({message: "Podcast video summary", data: oldSummary?.response})
             }
+
+            
+            let text : Document<Record<string, any>>[]
+            try {
+                const loader = YoutubeLoader.createFromUrl(body.url, {
+                    language: "en",
+                    addVideoInfo: true,
+                    });
+                    
+                    text = await loader.load();
+            } catch (error) {
+                return NextResponse.json({ message: "Invalid URL" },{status: 404 });
+            }
+
+            const splitter = new TokenTextSplitter({
+                chunkSize: 10000,
+                chunkOverlap: 250,
+            })
+
+            const textSummary = await splitter.splitDocuments(text);
             
         } catch (error) {
             
