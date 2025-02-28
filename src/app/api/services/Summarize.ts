@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions, CustomSession } from "../auth/[...nextauth]/options";
 import getUserCoin from "@/actions/fetchActions";
 import prisma from "../../../../prisma/db.config";
+import CoinsMinus from "@/actions/CoinsMinus";
+import CoinsSpend from "@/actions/CoinsSpend";
 
 interface SummarizePayloadType {
     url: string,
@@ -25,6 +27,19 @@ class Summarize {
             if(userCoins == null || (userCoins?.coins < 10)) {
                 const coinsneeded = 10 - currentCoins;
                 return NextResponse.json({message: `You need ${coinsneeded} more coins to summarize. Please add more coins.`}, {status: 400});
+            }
+
+            const oldSummary = await prisma.summary.findFirst({
+                where: {
+                    url: body.url
+                }
+            })
+
+            if(oldSummary && oldSummary.response) {
+                await CoinsMinus.coinsminus(session.user?.id!)
+                await CoinsSpend.coinsspend(session.user?.id!, body.id)
+
+                return NextResponse.json({message: "Podcast video summary", data: oldSummary?.response})
             }
             
         } catch (error) {
