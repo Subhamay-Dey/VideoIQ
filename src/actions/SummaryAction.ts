@@ -1,3 +1,5 @@
+"use server"
+
 import prisma from "../../prisma/db.config";
 import { drizzle } from "../../drizzle/db";
 import { summary } from "../../drizzle/schema";
