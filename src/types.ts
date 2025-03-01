@@ -13,5 +13,5 @@ type SummaryType = {
     id: string;
     createdAt: Date;
     user_id: number;
-    response: string | null;
+    response?: string | null;
 }
