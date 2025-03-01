@@ -8,6 +8,8 @@ import CoinsSpend from "@/actions/CoinsSpend";
 import { Document } from "@langchain/core/documents";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import {TokenTextSplitter} from "@langchain/textsplitters"
+import {PromptTemplate} from "@langchain/core/prompts"
+import { summaryTemplate } from "../../../../prompt/prompts";
 
 interface SummarizePayloadType {
     url: string,
@@ -44,7 +46,6 @@ class Summarize {
 
                 return NextResponse.json({message: "Podcast video summary", data: oldSummary?.response})
             }
-
             
             let text : Document<Record<string, any>>[]
             try {
@@ -64,6 +65,8 @@ class Summarize {
             })
 
             const textSummary = await splitter.splitDocuments(text);
+
+            const summary = PromptTemplate.fromTemplate(summaryTemplate)
             
         } catch (error) {
             
