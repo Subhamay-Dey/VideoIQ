@@ -5,7 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import ProfileDropdownMenu from "../common/ProfileDropdownMenu";
 
-async function DashNav({user,userCoins}: {user: CustomUser, userCoins: CoinsType | null}) {
+async function DashNav({
+  user,
+  userCoins,
+}: {
+  user: CustomUser;
+  userCoins: CoinsType | null;
+}) {
   return (
     <nav className="w-full flex justify-between items-center h-12 p-2">
       <Link href="/">

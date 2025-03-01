@@ -1,4 +1,8 @@
+import getUserCoin from '@/actions/fetchActions'
 import GetSummary from '@/actions/SummaryAction'
+import { authOptions, CustomSession } from '@/app/api/auth/[...nextauth]/options'
+import DashNav from '@/components/dashboard/DashNav'
+import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import React from 'react'
 
@@ -14,9 +18,12 @@ async function Summarize({params}: {params: {id: string}}) {
         return notFound()
     }
 
+    const session:CustomSession | null = await getServerSession(authOptions)
+    const userCoins = await getUserCoin.getUserCoin(session?.user?.id!)
+
   return (
-    <div>Summarize
-        <p>{params.id}</p>
+    <div className='container'>
+      <DashNav user={session?.user!} userCoins={userCoins}/>
     </div>
   )
 }

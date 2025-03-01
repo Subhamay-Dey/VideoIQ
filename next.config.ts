@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["www.launchuicomponents.com"],
   },
+  reactStrictMode: false,
 };
 
 export default nextConfig;
