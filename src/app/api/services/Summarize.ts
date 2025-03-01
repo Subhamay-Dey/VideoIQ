@@ -96,3 +96,5 @@ class Summarize {
         }
     }
 }
+
+export default Summarize
