@@ -11,11 +11,14 @@ import {
 import React, { Suspense, useState } from "react";
 import UserAvatar from "./UserAvatar";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 const Logout = dynamic(() => import("../auth/Logout"))
 
 function ProfileDropdownMenu({user}:{user:CustomUser}) {
 
   const [open, setOpen] = useState(false)
+
+  const router = useRouter();
 
   return (
     <>
@@ -32,7 +35,7 @@ function ProfileDropdownMenu({user}:{user:CustomUser}) {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Transactions</DropdownMenuItem>
-        <DropdownMenuItem>Coins Spend</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/coins-spend")}>Coins Spend</DropdownMenuItem>
         <DropdownMenuItem onClick={() => setOpen(true)}>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
