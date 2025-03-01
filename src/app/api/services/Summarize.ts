@@ -10,6 +10,9 @@ import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube
 import {TokenTextSplitter} from "@langchain/textsplitters"
 import {PromptTemplate} from "@langchain/core/prompts"
 import { summaryTemplate } from "../../../../prompt/prompts";
+import {loadSummarizationChain} from "langchain/chains"
+import { gptModel } from "../../../../lang/langchain";
+import UpdateSummary from "@/actions/UpdateSummary";
 
 interface SummarizePayloadType {
     url: string,
@@ -66,10 +69,30 @@ class Summarize {
 
             const textSummary = await splitter.splitDocuments(text);
 
-            const summary = PromptTemplate.fromTemplate(summaryTemplate)
+            const summaryPrompt = PromptTemplate.fromTemplate(summaryTemplate)
+
+            const summaryChain = loadSummarizationChain(gptModel, {
+                type: "map_reduce",
+                verbose: true,
+                combinePrompt: summaryPrompt
+            })
+
+            const res = await summaryChain.invoke({input_documents: textSummary})
+
+            await CoinsMinus.coinsminus(session.user?.id!)
+            await CoinsSpend.coinsspend(session.user?.id!, body.id)
+            await UpdateSummary.updatesummary(body.id, res?.text)
+
+            return NextResponse.json({
+                message: "Podcast video summary",
+                data: res?.text,
+            })
             
         } catch (error) {
-            
+            return NextResponse.json(
+                {message: "Error processing podcast video summary"},
+                {status: 500},
+            )
         }
     }
 }
