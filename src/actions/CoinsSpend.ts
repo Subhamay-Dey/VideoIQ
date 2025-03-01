@@ -13,4 +13,4 @@ class CoinsSpend {
     }
 }
 
-export default CoinsSpend
+export {CoinsSpend}

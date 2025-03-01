@@ -23,3 +23,5 @@ class CoinsSpendHistory {
     ["coinsSpend"],
     {revalidate: 60 * 60, tags: ["coinsSpend"]})
 }
+
+export {CoinsSpendHistory}

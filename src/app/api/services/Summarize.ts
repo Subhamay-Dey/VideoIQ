@@ -4,7 +4,7 @@ import { authOptions, CustomSession } from "../auth/[...nextauth]/options";
 import getUserCoin from "@/actions/fetchActions";
 import prisma from "../../../../prisma/db.config";
 import CoinsMinus from "@/actions/CoinsMinus";
-import CoinsSpend from "@/actions/CoinsSpend";
+import {CoinsSpend} from "@/actions/CoinsSpend";
 import { Document } from "@langchain/core/documents";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import {TokenTextSplitter} from "@langchain/textsplitters"
