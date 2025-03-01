@@ -4,11 +4,14 @@ import React from 'react'
 import { authOptions, CustomSession } from '../api/auth/[...nextauth]/options'
 import getUserCoin from '@/actions/fetchActions'
 import URLInput from '@/components/dashboard/URLInput'
+import { OldSummaries } from '@/actions/OldSummaries'
 
 async function page() {
 
     const session:CustomSession | null = await getServerSession(authOptions)
     const coins = await getUserCoin.getUserCoin(session?.user?.id!)
+
+    const summaires = await OldSummaries.oldSummaries(session?.user?.id!)
 
   return (
     <div className='container'>
