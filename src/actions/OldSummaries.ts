@@ -21,21 +21,3 @@ class OldSummaries {
 }
 
 export {OldSummaries}
-
-class getUserCoin {
-    static getUserCoin = unstable_cache(async (userid: number | string) => {
-        const userCoins = await prisma.user.findUnique({
-            select: {
-                coins: true,
-            },
-            where: {
-                id: Number(userid),
-            }
-        });
-        return userCoins;
-    },
-    ["userCoins"], 
-    { revalidate: 600, tags: ["userCoins"] });
-}
-
-export default getUserCoin;
