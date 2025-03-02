@@ -29,7 +29,16 @@ Create a Markdown-formatted summary of the podcast below. Also, generate specifi
    **Answer:** [First answer]
 
 2. **Question:[Second question]**   
-   **Answer:** [Second answer]`;
+   **Answer:** [Second answer];
+
+. **Question:[Third question]**   
+**Answer:** [Third answer]
+
+4. **Question:[Fourth question]**   
+**Answer:** [Fourth answer]
+
+5. **Question:[Fifth question]**   
+**Answer:** [Fifth answer]`;
 
 export const summaryRefineTemplate = `
 You are an expert in summarizing YouTube videos.
