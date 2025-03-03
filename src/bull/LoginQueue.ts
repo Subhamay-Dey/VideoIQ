@@ -49,5 +49,4 @@ export const LoginWorker = new Worker(LoginQueueName,
 
 LoginWorker.on("failed", (job, error) => {
     console.error(`Job: ${job?.id!}, failed: ${error.message}`);
-    
 })
