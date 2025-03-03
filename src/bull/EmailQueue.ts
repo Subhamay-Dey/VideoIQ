@@ -31,3 +31,7 @@ export const EmailWorker = new Worker(EmailQueueName,
     },
     {connection:redisConnection},
 )
+
+EmailWorker.on("failed", (job, error) => {
+    console.error(`Job: ${job?.id} failed: ${error.message}`)
+})

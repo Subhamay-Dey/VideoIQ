@@ -9,7 +9,7 @@ export const LoginQueue:Queue = new Queue(LoginQueueName, {
     defaultJobOptions: defaultQueueOptions,
 });
 
-export const loginQueueEvents = new QueueEvents(LoginQueueName, {
+export const LoginQueueEvents = new QueueEvents(LoginQueueName, {
     connection: redisConnection,
 })
 
