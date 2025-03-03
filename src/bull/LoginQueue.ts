@@ -1,6 +1,7 @@
 import { Job, Queue, QueueEvents, Worker } from "bullmq";
 import { defaultQueueOptions, redisConnection } from "./queue";
 import prisma from "../../prisma/db.config";
+import { EmailQueue, EmailQueueEvents } from "./EmailQueue";
 
 export const LoginQueueName: string = "LoginQueue";
 
@@ -37,6 +38,15 @@ export const LoginWorker = new Worker(LoginQueueName,
             image: user?.image,
           },
         });
+
+        const job = await EmailQueue.add("send-email", {user:data});
+
+        const result = await job.waitUntilFinished(EmailQueueEvents);
+
+        if (!result?.success) {
+            console.error("Email sending failed:", result?.error);
+            return false;
+        }
 
         return { success: true, user: { id: data.id } };
       } catch (error) {
