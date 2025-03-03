@@ -1,3 +1,4 @@
+import { LoginQueue, loginQueueEvents } from "@/bull/LoginQueue";
 import prisma from "../../../../../prisma/db.config";
 import { AuthOptions, ISODateString, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
@@ -23,30 +24,20 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       try {
-        const findUser = await prisma.user.findUnique({
-          where: {
-            email: user.email!,
-          },
-        });
-        if (findUser) {
-          user.id = findUser?.id.toString();
-          return true;
-        }
+      const job = await LoginQueue.add("process-login", { user, account });
 
-        const data = await prisma.user.create({
-          data: {
-            email: user.email!,
-            name: user.name!,
-            oauth_id: account?.providerAccountId!,
-            provider: account?.provider!,
-            image: user?.image,
-          },
-        });
-        user.id = data?.id.toString();
-        return true;
+      const result = await job.waitUntilFinished(loginQueueEvents);
+
+      if (!result?.success) {
+      console.error("Login processing failed:", result?.error);
+      return false;
+      }
+
+      user.id = result.user.id;
+      return true;
       } catch (error) {
-        console.log("The error is", error);
-        return false;
+      console.error("Queueing error:", error);
+      return false;
       }
     },
 
