@@ -26,3 +26,24 @@ export const connectKafka = async () => {
   }
 
 };
+
+export const sendKafkaEvent = async (topic: string, message: object) => {
+  try {
+    await producer.send({
+      topic,
+      messages: [{ value: JSON.stringify(message) }],
+    });
+    console.log(`✅ Event sent to ${topic}`);
+  } catch (error) {
+    console.error("❌ Kafka Event Error:", error);
+  }
+};
+
+// Graceful Shutdown for Next.js App
+process.on("SIGINT", async () => {
+  console.log("⏳ Closing Kafka...");
+  await producer.disconnect();
+  await consumer.disconnect();
+  console.log("✅ Kafka disconnected");
+  process.exit(0);
+});
