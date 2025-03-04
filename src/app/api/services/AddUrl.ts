@@ -3,11 +3,7 @@ import AddUrlSchema from "@/validations/AddUrlValidation";
 import vine, {errors} from "@vinejs/vine";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
-import {Document} from "@langchain/core/documents";
-import prisma from "../../../../prisma/db.config";
-import { drizzle } from "../../../../drizzle/db";
-import { summary } from "../../../../drizzle/schema";
+import { AddUrlQueue } from "@/bull/AddUrlQueue";
 
 interface AddUrlBody {
     url: string;
@@ -38,33 +34,12 @@ class AddUrl {
                 return NextResponse.json({ message: `You need ${coinsneeded} more coins to summarize. Please add more coins.` },{status: 400 });
             }
 
-            let text : Document<Record<string, any>>[]
-            try {
-                const loader = YoutubeLoader.createFromUrl(payload.url, {
-                    language: "en",
-                    addVideoInfo: true,
-                  });
-                  
-                  text = await loader.load();
-            } catch (error) {
-                return NextResponse.json({ message: "Invalid URL" },{status: 404 });
-            }
-
-            const summary = await prisma.summary.create({
-                data: {
-                    ...payload,
-                    user_id: Number(payload.user_id),
-                    title: text[0].metadata?.title ?? "No title",
-                }
+            await AddUrlQueue.add("processAddUrl", {
+                url: payload.url,
+                user_id: payload.user_id,
             })
 
-            // const summar = await drizzle.insert(summary).values({
-            //     url:payload.url, 
-            //     user_id: Number(payload.user_id),
-            //     title:text[0].metadata?.title ?? "No title",
-            // }).returning();
-
-            return NextResponse.json({ message: "Url added successfully", data: summary }, { status: 200 });
+            return NextResponse.json({ message: "Url added successfully"}, { status: 200 });
 
         } catch (error) {
             if (error instanceof errors.E_VALIDATION_ERROR) {
