@@ -9,10 +9,10 @@ import OldSummaryCard from '@/components/dashboard/OldSummary'
 
 async function page() {
 
-    const session:CustomSession | null = await getServerSession(authOptions)
-    const coins = await getUserCoin.getUserCoin(session?.user?.id!)
+    const session:CustomSession | null = await getServerSession(authOptions);
+    const coins = await getUserCoin.getUserCoin(session?.user?.id!);
 
-    const oldsummaires = await OldSummaries.oldSummaries(session?.user?.id!)
+    const oldsummaires = await OldSummaries.oldSummaries(session?.user?.id!);
 
   return (
     <div className='container'>

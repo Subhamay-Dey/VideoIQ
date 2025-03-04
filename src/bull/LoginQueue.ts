@@ -24,6 +24,7 @@ export const LoginWorker = new Worker(LoginQueueName,
             email: user.email!,
           },
         });
+        
         if (findUser) {
           user.id = findUser?.id.toString();
           return true;
