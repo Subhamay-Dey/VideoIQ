@@ -16,9 +16,7 @@ export const connectKafka = async () => {
     await consumer.connect();
 
     await consumer.subscribe({ topic: "user-auth", fromBeginning: true });
-
-    console.log("✅ Kafka Producer & Consumer connected");
-
+    
     consumer.run({
       eachMessage: async({topic, message}) => {
         const eventData = JSON.parse(message.value!.toString());
@@ -26,6 +24,8 @@ export const connectKafka = async () => {
       }
     })
 
+    console.log("✅ Kafka Producer & Consumer connected");
+    
   } catch (error) {
 
     console.error("❌ Kafka Connection Error:", error);
