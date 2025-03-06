@@ -6,7 +6,7 @@ export const kafka = new Kafka({
   logLevel: logLevel.ERROR
 });
 
-export const producer = kafka.producer();
+export const producer = kafka.producer()
 export const consumer = kafka.consumer({groupId: "nextjs-app"});
 
 export const connectKafka = async () => {
