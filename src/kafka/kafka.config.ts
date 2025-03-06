@@ -7,7 +7,7 @@ export const kafka = new Kafka({
 });
 
 export const producer = kafka.producer()
-export const consumer = kafka.consumer({groupId: "nextjs-app"});
+export const consumer = kafka.consumer({groupId: "auth-logs-group"});
 
 export const connectKafka = async () => {
 
@@ -21,6 +21,13 @@ export const connectKafka = async () => {
       eachMessage: async({topic, message}) => {
         const eventData = JSON.parse(message.value!.toString());
         console.log(`🔹 User Auth Event Received:`, eventData);
+        if (eventData.status === "success") {
+          console.log(`✅ User ${eventData.email} logged in successfully.`);
+        } else if (eventData.status === "new_user") {
+            console.log(`🎉 New user created: ${eventData.email}`);
+        } else if (eventData.status === "error") {
+            console.error(`❌ Login error for ${eventData.email}: ${eventData.error}`);
+        }
       }
     })
 
