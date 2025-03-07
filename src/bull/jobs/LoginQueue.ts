@@ -1,6 +1,6 @@
 import { Job, Queue, QueueEvents, Worker } from "bullmq";
-import { defaultQueueOptions, redisConnection } from "./queue";
-import prisma from "../../prisma/db.config";
+import { defaultQueueOptions, redisConnection } from "../queue";
+import prisma from "../../../prisma/db.config";
 import { EmailQueue, EmailQueueEvents } from "./EmailQueue";
 import { sendKafkaEvent } from "@/kafka/kafka.config";
 

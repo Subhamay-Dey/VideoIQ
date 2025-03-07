@@ -1,8 +1,8 @@
-import {Job, Queue, QueueEvents, Worker} from "bullmq"
-import { defaultQueueOptions, redisConnection } from "./queue";
+import {Job, Queue, QueueEvents, Worker} from "bullmq";
+import { defaultQueueOptions, redisConnection } from "../queue";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import {Document} from "@langchain/core/documents";
-import prisma from "../../prisma/db.config";
+import prisma from "../../../prisma/db.config";
 
 export const AddUrlQueueName = "addurlqueue";
 

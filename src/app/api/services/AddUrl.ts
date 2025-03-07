@@ -3,7 +3,7 @@ import AddUrlSchema from "@/validations/AddUrlValidation";
 import vine, {errors} from "@vinejs/vine";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { AddUrlQueue } from "@/bull/AddUrlQueue";
+import { AddUrlQueue } from "@/bull/jobs/AddUrlQueue";
 
 interface AddUrlBody {
     url: string;

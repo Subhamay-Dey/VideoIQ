@@ -1,5 +1,5 @@
 import {Job, Queue, QueueEvents, Worker} from "bullmq";
-import { defaultQueueOptions, redisConnection } from "./queue";
+import { defaultQueueOptions, redisConnection } from "../queue";
 import { sendEmail } from "@/mails/mail";
 
 export const EmailQueueName:string = "emailqueue";
@@ -34,4 +34,4 @@ export const EmailWorker = new Worker(EmailQueueName,
 
 EmailWorker.on("failed", (job, error) => {
     console.error(`Job: ${job?.id} failed: ${error.message}`)
-})
+});
