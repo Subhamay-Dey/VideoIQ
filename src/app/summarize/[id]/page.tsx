@@ -7,7 +7,12 @@ import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import React from 'react'
 
-async function Summarize({params}: {params: {id: string}}) {
+interface SummaryPageProps {
+  params: { id: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
+}
+
+async function Summarize({params}: SummaryPageProps) {
 
     if(!params?.id) {
         return notFound()
