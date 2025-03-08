@@ -8,18 +8,18 @@ const razorpay = new Razorpay({
 
 class Transaction {
     static async transaction(req: NextRequest) {
-    const {amount,currency} = await req.json();
+        const {amount,currency} = await req.json();
 
-    if (!amount || !currency) {
-        return NextResponse.json({ error: "Invalid payment details" }, { status: 400 });
-    }
+        if (!amount || !currency) {
+            return NextResponse.json({ error: "Invalid payment details" }, { status: 400 });
+        }
 
-    const order  = await razorpay.orders.create({
-        amount,
-        currency
-    });
+        const order  = await razorpay.orders.create({
+            amount,
+            currency
+        });
 
-    return NextResponse.json(order);
+        return NextResponse.json(order);
     }
 }
 
