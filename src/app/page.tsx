@@ -16,13 +16,13 @@ async function Page() {
     {/* <p>{JSON.stringify(session)}</p> */}
     <div className='container'>
       <Navbar user={session?.user}/>
+    </div>
       <Hero/>
-      <div className='block'>
+
         <PricingPage/>
-      </div>
+
         <Testimonials/>
         <Footerdemo/>
-    </div>
     </>
   )
 }

@@ -13,7 +13,7 @@ async function DashNav({
   userCoins: CoinsType | null;
 }) {
   return (
-    <nav className="w-full flex justify-between items-center h-12 p-2">
+    <nav className="w-full flex justify-between items-center h-16 p-2">
       <Link href="/">
         <div className="flex items-center space-x-2">
           {/* <Image src="" width={40} height={40} alt="lgo" /> */}
