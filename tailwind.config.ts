@@ -16,6 +16,10 @@ export default {
 		},
 	},
   	extend: {
+		fontFamily: {
+			geist: "var(--font-geist-sans)",
+			geistMono: "var(--font-geist-mono)",
+		  },
   		colors: {
 			brand: "hsl(var(--brand))","brand-foreground": "hsl(var(--brand-foreground))",
   			background: 'hsl(var(--background))',
