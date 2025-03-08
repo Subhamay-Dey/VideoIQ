@@ -2,7 +2,7 @@ import { Job, Queue, QueueEvents, Worker } from "bullmq";
 import { defaultQueueOptions, redisConnection } from "../queue";
 import prisma from "../../../prisma/db.config";
 import { EmailQueue, EmailQueueEvents } from "./EmailQueue";
-import { sendKafkaEvent } from "@/kafka/kafka.config";
+import { Producer } from "@/kafka/producer";
 
 export const LoginQueueName: string = "LoginQueue";
 
@@ -29,7 +29,7 @@ export const LoginWorker = new Worker(LoginQueueName,
         if (findUser) {
           user.id = findUser?.id.toString();
 
-          await sendKafkaEvent("user-auth", {
+          await Producer("user-auth", {
             status: "success",
             email: user.email,
             userId: user.id,
@@ -57,7 +57,7 @@ export const LoginWorker = new Worker(LoginQueueName,
             return false;
         }
 
-        await sendKafkaEvent("user-auth", {
+        await Producer("user-auth", {
           status: "success",
           email: data.email,
           userId: data.id,
@@ -68,7 +68,7 @@ export const LoginWorker = new Worker(LoginQueueName,
       } catch (error) {
         console.error("Login processing failed:", error);
 
-        await sendKafkaEvent("user-auth", {
+        await Producer("user-auth", {
           status: "error",
           email: user.email,
           error: error,
@@ -83,7 +83,7 @@ export const LoginWorker = new Worker(LoginQueueName,
 LoginWorker.on("failed", async(job, error) => {
     console.error(`Job: ${job?.id!}, failed: ${error.message}`);
 
-    await sendKafkaEvent("user-auth", {
+    await Producer("user-auth", {
       status: "job_failed",
       jobID: job?.id!,
       error: error.message,

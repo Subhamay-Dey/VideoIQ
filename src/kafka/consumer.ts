@@ -28,3 +28,11 @@ export async function Consumer() {
         console.error("❌ Kafka Connection Error:", error);
     }
 };
+
+// process.on("SIGINT", async () => {
+//     console.log("⏳ Closing Kafka...");
+//     await producer.disconnect();
+//     await consumer.disconnect();
+//     console.log("✅ Kafka disconnected");
+//     process.exit(0);
+//   });

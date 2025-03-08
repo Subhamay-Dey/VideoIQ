@@ -1,6 +1,6 @@
 import { kafka } from "./client";
 
-export async function Producer(topic: string, message: string) {
+export async function Producer(topic: string, message: object) {
     
     const producer = kafka.producer();
     await producer.connect();
