@@ -24,7 +24,7 @@ async function CoinsSpend() {
                 className="w-full text-left md:w-[500px] rounded-md p-4 border border-dashed"
                 key={index}
               >
-                <Link href={`/summarize?id=${item.summary_id}`}>
+                <Link href={`/summarize/${item.summary_id}`}>
                   <h1 className="font-bold my-2">{item.summary?.title}</h1>
                 </Link>
 

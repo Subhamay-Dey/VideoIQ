@@ -20,13 +20,20 @@ export const EmailWorker = new Worker(EmailQueueName,
 
         console.log(`Processing login for user: ${user.email}`);
 
+        try {
             await sendEmail(
                 user.email, 
                 "Welcome to VideoIQ 🎉", 
                 `Hi ${user.name}, You have successfully logged in, Best wishes from Subhamay 😊`
             );
 
+            console.log(`✅ Email sent successfully to ${user.email}`);
+    
             return { success: true, user };
+        } catch (error) {
+            console.error(`❌ Email job failed for ${user.email}:`, error);
+            return { success: false, error };
+        }
             
     },
     {connection:redisConnection},

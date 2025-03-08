@@ -50,6 +50,8 @@ export const LoginWorker = new Worker(LoginQueueName,
         });
 
         const job = await EmailQueue.add("send-email", {user:data});
+        console.log(`📩 Email job added for: ${data.email}`);
+
         const result = await job.waitUntilFinished(EmailQueueEvents);
 
         if (!result?.success) {
