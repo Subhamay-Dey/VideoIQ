@@ -1,12 +1,11 @@
 import {ConnectionOptions, DefaultJobOptions} from "bullmq";
-import IORedis from "ioredis";
 
-export const redisConnection:ConnectionOptions = new IORedis({
+export const redisConnection:ConnectionOptions = {
     host: process.env.REDIS_HOST!,
-    port: Number(process.env.REDIS_PORT!),
+    port: Number(process.env.REDIS_PORT!) || 6379,
     password: process.env.UPSTASH_REDIS_PASSWORD!,
     tls: {},
-});
+};
 
 export const defaultQueueOptions:DefaultJobOptions = {
     removeOnComplete: {
