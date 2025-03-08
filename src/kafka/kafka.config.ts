@@ -1,10 +1,3 @@
-import { Kafka, logLevel } from "kafkajs";
-
-export const kafka = new Kafka({
-  clientId: "nextjs-app",
-  brokers: [process.env.KAFKA_BROKER!],
-  logLevel: logLevel.ERROR
-});
 
 export const producer = kafka.producer()
 export const consumer = kafka.consumer({groupId: "auth-logs-group"});
