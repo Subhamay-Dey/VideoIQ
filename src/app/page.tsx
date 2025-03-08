@@ -14,6 +14,7 @@ async function Page() {
   return (
     <>
     {/* <p>{JSON.stringify(session)}</p> */}
+    <div className='container'>
       <Navbar user={session?.user}/>
       <Hero/>
       <div className='block'>
@@ -21,6 +22,7 @@ async function Page() {
       </div>
         <Testimonials/>
         <Footerdemo/>
+    </div>
     </>
   )
 }
