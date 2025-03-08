@@ -3,7 +3,7 @@ import { kafka } from "./client";
 export async function Admin() {
     const admin = kafka.admin();
     console.log("Admin Connecting...");
-    admin.connect();
+    await admin.connect();
     console.log("Admin Connected Successfully");
     console.log("Creating topic [user-auth]");
     await admin.createTopics({
