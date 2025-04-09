@@ -31,4 +31,4 @@ async function DashNav({
   );
 }
 
-export default DashNav;
+export default DashNav
